@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\StripePayment_Integration_WebAPI.props" />
+</Project>

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\StripePayment_Integration_WebAPI.props" />
+</Project>

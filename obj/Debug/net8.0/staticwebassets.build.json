@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "krNSsBEqasYTvQvxCcpkXfSajL3Idc5PbPzp4QaeVes=",
+  "Source": "StripePayment_Integration_WebAPI",
+  "BasePath": "_content/StripePayment_Integration_WebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
