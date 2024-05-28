@@ -20,7 +20,7 @@ namespace E_commercial_Web_RESTAPI.Services
         {
             try
             {
-                StripeConfiguration.ApiKey = "";
+                StripeConfiguration.ApiKey = "sk_test_51PK4cdRvTnksK7lQo03Ma0OB4R4dyHqgtWKR7ZLPC7mMoCnBOvfxtbmbcRFOw6S5a9GJTdgR98l9izmBJeF0iqiU00ZR4GtLcF";
                 var options = new ChargeCreateOptions
                 {
                     Amount = payment.amount,

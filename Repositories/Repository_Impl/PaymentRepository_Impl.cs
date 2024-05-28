@@ -61,9 +61,8 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
             return await _context.payments.FirstOrDefaultAsync(p => p.CustomerId == customerId);
         }
 
-        public async Task<List<Payment>> GetAllPaymentsByCustomers()
-        {
-            return await _context.payments.ToListAsync();
-        }
+        public async Task<List<Payment>> GetAllPaymentsByCustomers() =>
+            await _context.payments.ToListAsync();
+        
     }
 }
