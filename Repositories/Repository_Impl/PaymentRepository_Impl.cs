@@ -38,14 +38,16 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
                 throw new Exception("Customer is not found");
 
             }
-            if (!CheckCardCharge.CheckCardCurrency(payment.ToPaymentDTO()))
+            var pay = payment.ToPaymentDTO();
+            
+            if (!pay.CheckCardCurrency())
             {
-                          throw new InvalidOperationException("This PaymentCard is not valid");
+                          throw new InvalidOperationException($"This PaymentCard {pay} is not valid");
                            
             }
          
 
-             payment.CustomerId =  customerId;
+            payment.CustomerId =  customerId;
             await _context.payments.AddAsync(payment);
             await _context.SaveChangesAsync();
             return await  _paymentService.ChargeCardsync(payment);
