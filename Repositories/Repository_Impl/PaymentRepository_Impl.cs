@@ -30,38 +30,44 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
         }
 
 
-        public async Task<dynamic> InsertPayment(long customerId, Payment payment)
+        public async Task<ApiResponse> InsertPayment(long customerId, Payment payment)
         {
             var isCustomerAvailable = await _context.customers.FirstOrDefaultAsync(s => s.Id == customerId);
             if (isCustomerAvailable == null)
             {
-                throw new Exception("Customer is not found");
+                return new ApiResponse
+                {
+                    Success = false,
+                    Message = $"Customer with ID {customerId} is not found",
+                    StatusCode = 404
+                };
+
 
             }
-            var pay = payment.ToPaymentDTO();
-            
-            if (!pay.CheckCardCurrency())
+            payment.CustomerId = isCustomerAvailable.Id;
+
+            var response = await _paymentService.ChargeCardsync(payment);
+
+            if (response.Success)
             {
-                          throw new InvalidOperationException($"This PaymentCard {pay} is not valid");
-                           
+                await _context.payments.AddAsync(payment);
+                await _context.SaveChangesAsync();
             }
-         
 
-            payment.CustomerId =  customerId;
-            await _context.payments.AddAsync(payment);
-            await _context.SaveChangesAsync();
-            return await  _paymentService.ChargeCardsync(payment);
-           
-           
-           
+            return response;
+
+
+
+
+
         }
 
        
 
-        public async Task<Payment?> GetPaymentById(long customerId)
-        {
-            return await _context.payments.FirstOrDefaultAsync(p => p.CustomerId == customerId);
-        }
+        public async Task<Payment?> GetPaymentById(long customerId) =>
+        
+            await _context.payments.FirstOrDefaultAsync(p => p.CustomerId == customerId);
+        
 
         public async Task<List<Payment>> GetAllPaymentsByCustomers() =>
             await _context.payments.ToListAsync();

@@ -25,7 +25,7 @@ namespace E_commercial_Web_RESTAPI.Mapper
                 Id = payment.Id,
                 amount = payment.amount,
                 source = payment.source,
-                Currency = payment.Currency.ToString()
+                Currency = payment.Currency.ToString().ToUpper()
 
 
             };
@@ -38,7 +38,7 @@ namespace E_commercial_Web_RESTAPI.Mapper
            
                 amount = payment.amount,
                 source = payment.source,
-                Currency = ConvertToCurrencyEnum(payment.Currency)
+                Currency = ConvertToCurrencyEnum(payment.Currency.ToUpper())
 
             };
         }
@@ -47,7 +47,7 @@ namespace E_commercial_Web_RESTAPI.Mapper
         {
             return new Payment
             {
-                Currency = ConvertToCurrencyEnum(paymentdto.Currency),
+                Currency = ConvertToCurrencyEnum(paymentdto.Currency.ToUpper()),
 
                 amount = paymentdto.amount,
                 

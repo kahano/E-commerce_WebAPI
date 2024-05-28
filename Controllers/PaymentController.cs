@@ -4,6 +4,7 @@ using E_commercial_Web_RESTAPI.Mapper;
 using E_commercial_Web_RESTAPI.Models.Payment.Payment;
 using E_commercial_Web_RESTAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace E_commercial_Web_RESTAPI.Controllers
 {
@@ -27,14 +28,22 @@ namespace E_commercial_Web_RESTAPI.Controllers
         [Route("{customerId:long}")]
      
 
-        public async Task<dynamic> ChargeCard([FromRoute]long customerId, PaymentRequestDTO paymentdto)
+        public async Task<IActionResult> ChargeCard([FromRoute]long customerId, PaymentRequestDTO paymentdto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var paymentModel = paymentdto.ToPaymentFromRequestDTO();
-            return await _paymentRepository.InsertPayment(customerId, paymentModel);
+            var response = await _paymentRepository.InsertPayment(customerId, paymentModel);
+
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode(response.StatusCode, response);
+
         }
 
     
