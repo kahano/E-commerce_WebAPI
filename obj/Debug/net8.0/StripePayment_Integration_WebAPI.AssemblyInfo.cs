@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StripePayment_Integration_WebAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0971e048baa6c5ad84c26ac9ac1653169f950bd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6505bcbac4c4a07febfe0c39d5bec8ba498d577f")]
 [assembly: System.Reflection.AssemblyProductAttribute("StripePayment_Integration_WebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StripePayment_Integration_WebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

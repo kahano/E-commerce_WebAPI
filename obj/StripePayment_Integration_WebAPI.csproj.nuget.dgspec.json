@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Kahano\\Desktop\\E-commercial_WebAPI\\E-commercial_Web_RESTAPI\\StripePayment_Integration_WebAPI.csproj": {}
+    "C:\\Users\\Kahano\\Desktop\\StripePayment_Integration_WebAPI\\StripePayment_Integration\\StripePayment_Integration_WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Kahano\\Desktop\\E-commercial_WebAPI\\E-commercial_Web_RESTAPI\\StripePayment_Integration_WebAPI.csproj": {
+    "C:\\Users\\Kahano\\Desktop\\StripePayment_Integration_WebAPI\\StripePayment_Integration\\StripePayment_Integration_WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Kahano\\Desktop\\E-commercial_WebAPI\\E-commercial_Web_RESTAPI\\StripePayment_Integration_WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Kahano\\Desktop\\StripePayment_Integration_WebAPI\\StripePayment_Integration\\StripePayment_Integration_WebAPI.csproj",
         "projectName": "StripePayment_Integration_WebAPI",
-        "projectPath": "C:\\Users\\Kahano\\Desktop\\E-commercial_WebAPI\\E-commercial_Web_RESTAPI\\StripePayment_Integration_WebAPI.csproj",
+        "projectPath": "C:\\Users\\Kahano\\Desktop\\StripePayment_Integration_WebAPI\\StripePayment_Integration\\StripePayment_Integration_WebAPI.csproj",
         "packagesPath": "C:\\Users\\Kahano\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Kahano\\Desktop\\E-commercial_WebAPI\\E-commercial_Web_RESTAPI\\obj\\",
+        "outputPath": "C:\\Users\\Kahano\\Desktop\\StripePayment_Integration_WebAPI\\StripePayment_Integration\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kahano\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,6 +45,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
               "version": "[8.0.5, )"
@@ -66,6 +74,10 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
+            "Microsoft.Extensions.Identity.Core": {
               "target": "Package",
               "version": "[8.0.5, )"
             },
