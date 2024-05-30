@@ -1,4 +1,5 @@
-# Stripe PaymentGateway API Integration with a local build API
+# Stripe PaymentGateway API Integration 
+
 # Project Objectives:
  - Learning how to interact with external API services
 
