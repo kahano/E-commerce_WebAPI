@@ -1,6 +1,8 @@
-Stripe PaymentGateway API Integration 
+# Stripe PaymentGateway API Integration with a local build API
+# Obkectives:
+ - Learning how to interact with external API services
 
-Swagger API testing 
+# Swagger API testing 
 
 ![Skjermbilde](https://github.com/kahano/StripePayment_Integration_WebAPI/assets/48335933/20939365-23fd-4153-8117-0dafb09dab8c) 
 
