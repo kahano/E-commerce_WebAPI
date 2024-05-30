@@ -1,5 +1,5 @@
 # Stripe PaymentGateway API Integration with a local build API
-# Obkectives:
+# Project Objectives:
  - Learning how to interact with external API services
 
 # Swagger API testing 
