@@ -1,5 +1,5 @@
 ﻿using E_commercial_Web_RESTAPI.Models;
-using E_commercial_Web_RESTAPI.Models.Payment.Payment;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
@@ -15,6 +15,7 @@ namespace E_commercial_Web_RESTAPI.Data
 
         public DbSet<Customer> customers { get; set; }
         public DbSet<Payment> payments { get; set; }
+       
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

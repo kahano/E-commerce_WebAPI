@@ -1,7 +1,7 @@
 ﻿using E_commercial_Web_RESTAPI.DTOS;
-using E_commercial_Web_RESTAPI.Extensions;
+using E_commercial_Web_RESTAPI.Helpers;
 using E_commercial_Web_RESTAPI.Mapper;
-using E_commercial_Web_RESTAPI.Models.Payment.Payment;
+using E_commercial_Web_RESTAPI.Models;
 using E_commercial_Web_RESTAPI.Repositories;
 using Stripe;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace E_commercial_Web_RESTAPI.Services
             {
                 StripeConfiguration.ApiKey = "sk_test_51PK4cdRvTnksK7lQo03Ma0OB4R4dyHqgtWKR7ZLPC7mMoCnBOvfxtbmbcRFOw6S5a9GJTdgR98l9izmBJeF0iqiU00ZR4GtLcF";
 
-             
+
                 var options = new ChargeCreateOptions
                 {
                     Amount = payment.amount,
@@ -29,9 +29,9 @@ namespace E_commercial_Web_RESTAPI.Services
                     Source = payment.source, // considered as a bank credit/debitcard with information of owner
 
                 };
-                
+
                 var service = new ChargeService();
-                
+
                 Charge charge = await service.CreateAsync(options);
 
 
@@ -81,6 +81,6 @@ namespace E_commercial_Web_RESTAPI.Services
 
 
         }
-        
+
     }
 }

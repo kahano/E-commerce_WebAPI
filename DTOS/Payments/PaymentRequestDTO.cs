@@ -1,19 +1,19 @@
 ﻿using E_commercial_Web_RESTAPI.Models;
-using E_commercial_Web_RESTAPI.Models.Payment.Payment;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 
-namespace E_commercial_Web_RESTAPI.DTOS
+namespace E_commercial_Web_RESTAPI.DTOS.Payments
 {
-    public class PaymentRequestDTO {
+    public class PaymentRequestDTO
+    {
 
         [Required]
         [Range(50, 1000000)]
-        public long amount {  get; set; }
+        public long amount { get; set; }
 
 
         [Required]
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
 
 
         [Required]
@@ -21,6 +21,7 @@ namespace E_commercial_Web_RESTAPI.DTOS
 
 
 
-        };
-    
+
+    };
+
 }

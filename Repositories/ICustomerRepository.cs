@@ -1,4 +1,5 @@
-﻿using E_commercial_Web_RESTAPI.Models;
+﻿using E_commercial_Web_RESTAPI.Helpers;
+using E_commercial_Web_RESTAPI.Models;
 
 namespace E_commercial_Web_RESTAPI.Repositories
 {
@@ -7,8 +8,8 @@ namespace E_commercial_Web_RESTAPI.Repositories
         Task<Customer> CreateCustomer(Customer customer);
         Task<Customer?> FindCustomerById(long id);
 
-        Task<List<Customer>> GetAllCustomers();
+        Task<List<Customer>> GetAllCustomers(CustomerQueryObject query);
 
-        
+
     }
 }

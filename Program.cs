@@ -1,8 +1,9 @@
 using E_commercial_Web_RESTAPI.Data;
-using E_commercial_Web_RESTAPI.Models.Payment;
+using E_commercial_Web_RESTAPI.Models;
 using E_commercial_Web_RESTAPI.Repositories;
 using E_commercial_Web_RESTAPI.Repositories.Repository_Impl;
 using E_commercial_Web_RESTAPI.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Stripe;
 
@@ -25,6 +26,7 @@ builder.Services.AddDbContext<ApplicationDBcontext>(op => op.UseSqlServer(builde
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository_Impl>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository_Impl>();
 builder.Services.AddScoped<StripePaymentService>();
+//builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDBcontext>();
 
 var app = builder.Build();
 

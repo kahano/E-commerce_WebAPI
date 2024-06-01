@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace E_commercial_Web_RESTAPI.Models
 {
@@ -14,7 +16,9 @@ namespace E_commercial_Web_RESTAPI.Models
 
         [Required]
         [MaxLength(10, ErrorMessage = "PhoneNumber can not be over 10 digits")]
-        public  string PhoneNumber { get; set; }
+        public  string PhoneNumber { get; set; } = string.Empty;
+
+        public List<Payment> payments { get; set; } = new List<Payment>();
 
        
 

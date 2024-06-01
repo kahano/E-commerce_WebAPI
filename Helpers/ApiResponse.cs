@@ -1,4 +1,4 @@
-﻿namespace E_commercial_Web_RESTAPI.Extensions
+﻿namespace E_commercial_Web_RESTAPI.Helpers
 {
     public class ApiResponse
     {

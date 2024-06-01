@@ -1,5 +1,5 @@
-﻿using E_commercial_Web_RESTAPI.DTOS;
-using E_commercial_Web_RESTAPI.Models.Payment.Payment;
+﻿using E_commercial_Web_RESTAPI.DTOS.Payments;
+using E_commercial_Web_RESTAPI.Models;
 using Stripe;
 
 namespace E_commercial_Web_RESTAPI.Mapper
@@ -20,12 +20,23 @@ namespace E_commercial_Web_RESTAPI.Mapper
         }
         public static PaymentDTO ToPaymentDTO(this Payment payment)
         {
+            if (payment == null)
+            {
+                throw new ArgumentNullException(nameof(payment), "Payment cannot be null");
+            }
+
             return new PaymentDTO
             {
                 Id = payment.Id,
                 amount = payment.amount,
                 source = payment.source,
-                Currency = payment.Currency.ToString().ToUpper()
+                Currency = payment.Currency.ToString().ToUpper(),
+                CreatedDate = payment.CreatedDate,
+                CustomerId = payment.CustomerId,
+                CreatedBy = payment.customer.Name
+                
+
+
 
 
             };
@@ -35,7 +46,7 @@ namespace E_commercial_Web_RESTAPI.Mapper
         {
             return new Payment
             {
-           
+
                 amount = payment.amount,
                 source = payment.source,
                 Currency = ConvertToCurrencyEnum(payment.Currency.ToUpper())
@@ -50,10 +61,10 @@ namespace E_commercial_Web_RESTAPI.Mapper
                 Currency = ConvertToCurrencyEnum(paymentdto.Currency.ToUpper()),
 
                 amount = paymentdto.amount,
-                
-                  source = paymentdto.source,
-              
-              
+
+                source = paymentdto.source,
+
+
 
             };
         }

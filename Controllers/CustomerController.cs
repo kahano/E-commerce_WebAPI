@@ -1,5 +1,6 @@
 ﻿using E_commercial_Web_RESTAPI.Data;
 using E_commercial_Web_RESTAPI.DTOS.Customers;
+using E_commercial_Web_RESTAPI.Helpers;
 using E_commercial_Web_RESTAPI.Mapper.CustomerMappper;
 using E_commercial_Web_RESTAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -36,14 +37,14 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
         [HttpGet("{id:long}")]
 
-        public async Task<IActionResult> GetById([FromRoute]long id)
+        public async Task<IActionResult> GetById([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-                var customerModel = await _customer_repository.FindCustomerById(id);
-            if(customerModel == null)
+            var customerModel = await _customer_repository.FindCustomerById(id);
+            if (customerModel == null)
             {
                 return NotFound();
             }
@@ -52,14 +53,18 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] CustomerQueryObject query)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var customers =  await _customer_repository.GetAllCustomers();
+            var customers = await _customer_repository.GetAllCustomers(query);
+            if(customers is null || !customers.Any())
+            {
+                return NotFound("No customer found ! ");
+            }
             var customerModel = customers.Select(s => s.ToCustomerDTO()).ToList();
             return Ok(customerModel);
 

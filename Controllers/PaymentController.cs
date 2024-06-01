@@ -1,7 +1,8 @@
 ﻿using E_commercial_Web_RESTAPI.Data;
-using E_commercial_Web_RESTAPI.DTOS;
+using E_commercial_Web_RESTAPI.DTOS.Payments;
+using E_commercial_Web_RESTAPI.Helpers;
 using E_commercial_Web_RESTAPI.Mapper;
-using E_commercial_Web_RESTAPI.Models.Payment.Payment;
+using E_commercial_Web_RESTAPI.Models;
 using E_commercial_Web_RESTAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
@@ -26,9 +27,9 @@ namespace E_commercial_Web_RESTAPI.Controllers
         }
         [HttpPost]
         [Route("{customerId:long}")]
-     
 
-        public async Task<IActionResult> ChargeCard([FromRoute]long customerId, PaymentRequestDTO paymentdto)
+
+        public async Task<IActionResult> ChargeCard([FromRoute] long customerId, PaymentRequestDTO paymentdto)
         {
             if (!ModelState.IsValid)
             {
@@ -46,17 +47,17 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
         }
 
-    
 
 
-        [HttpGet("{CustomerId}")]
-        public async Task<IActionResult> GetPaymentByIdAsync(long CustomerId)
+
+        [HttpGet("{Id:long}")]
+        public async Task<IActionResult> GetPaymentByIdAsync(long Id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var payment = await _paymentRepository.GetPaymentById(CustomerId);
+            var payment = await _paymentRepository.GetPaymentById(Id);
 
             if (payment == null)
             {
@@ -69,14 +70,18 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> GetAllPayments()
+        public async Task<IActionResult> GetAllPayments([FromQuery]PaymentQueryObject query)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var getpayments = await _paymentRepository.GetAllPaymentsByCustomers();
+            var getpayments = await _paymentRepository.GetAllPaymentsByCustomer(query);
+            if (getpayments == null || !getpayments.Any())
+            {
+                return NotFound("No payments found");
+            }
             var AllPayments = getpayments.Select(p => p.ToPaymentDTO()).ToList();
             return Ok(AllPayments);
 

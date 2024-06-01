@@ -12,7 +12,8 @@ namespace E_commercial_Web_RESTAPI.Mapper.CustomerMappper
 
                 customer.Id,
                 customer.Name,
-                customer.PhoneNumber
+                customer.PhoneNumber,
+                customer.payments.Select(s => s.ToPaymentDTO()).ToList()
             );
         }
 

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using E_commercial_Web_RESTAPI.DTOS.Payments;
+using E_commercial_Web_RESTAPI.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace E_commercial_Web_RESTAPI.DTOS.Customers
 {
@@ -11,7 +13,9 @@ namespace E_commercial_Web_RESTAPI.DTOS.Customers
 
         [Required]
         [MaxLength(10, ErrorMessage = "PhoneNumber can not be over 10 digits")]
-        string PhoneNumber
+        string PhoneNumber ,
+
+        List<PaymentDTO> payments
 
         );
 
