@@ -19,7 +19,7 @@ namespace E_commercial_Web_RESTAPI.Services
         {
             try
             {
-                StripeConfiguration.ApiKey = "";
+                StripeConfiguration.ApiKey = "SECRET_KEY";
 
 
                 var options = new ChargeCreateOptions

@@ -73,41 +73,49 @@ namespace E_commercial_Web_RESTAPI.Controllers
                     if (result.Succeeded)
                     {
 
-                    //sign In
-                    //await _signInManager.SignInAsync(appuser, isPersistent: false);
-
-
-
-                       
+                 
+                         var roleResult = result;
+                    
+                        if( await _roleManager.FindByNameAsync(Role.Admin.ToString()) is null)
+                        {
                             await _roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
-                            await _roleManager.CreateAsync(new IdentityRole { Name = "Customer" });
-                            //await _roleManager.CreateAsync(new IdentityRole("Customer"));
-                            var roleResult = await _userManager.AddToRoleAsync(appuser, Role.Admin.ToString());
+                            roleResult = await _userManager.AddToRoleAsync(appuser, Role.Admin.ToString());
 
+                        }
+                       
+                        
+                        else
 
-                            await _signInManager.SignInAsync(appuser, isPersistent: false);
-                            if (roleResult.Succeeded)
-                            {
-                                return Ok(
+                        {
+                           await _roleManager.CreateAsync(new IdentityRole { Name = "Customer" });
+                           roleResult = await _userManager.AddToRoleAsync(appuser, Role.Customer.ToString());
+                        }
 
-                                 new UserDTO
-                                 {
+                        
 
-                                     UserName = appuser.UserName,
-                                     Email = appuser.Email,
-                                 });
-                            }
-                            else
-                            {
-                                return StatusCode(500, roleResult.Errors);
-                            }
-                      
+                        await _signInManager.SignInAsync(appuser, isPersistent: false);
+                        if (roleResult.Succeeded)
+                        {
+                            return Ok(
 
+                                new UserDTO
+                                {
+
+                                    UserName = appuser.UserName,
+                                    Email = appuser.Email,
+                                });
                         }
                         else
                         {
-                            return StatusCode(500, result.Errors);
+                            return StatusCode(500, roleResult.Errors);
                         }
+                      
+
+                    }
+                    else
+                    {
+                        return StatusCode(500, result.Errors);
+                    }
 
                     
                         

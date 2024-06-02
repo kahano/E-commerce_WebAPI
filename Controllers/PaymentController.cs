@@ -30,7 +30,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
         [HttpPost]
         [Route("{customerId:long}")]
 
-
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> ChargeCard([FromRoute] long customerId, PaymentRequestDTO paymentdto)
         {
             if (!ModelState.IsValid)
@@ -53,6 +53,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
 
         [HttpGet("{Id:long}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetPaymentByIdAsync(long Id)
         {
             if (!ModelState.IsValid)
@@ -71,7 +72,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllPayments([FromQuery]PaymentQueryObject query)
         {
             if (!ModelState.IsValid)

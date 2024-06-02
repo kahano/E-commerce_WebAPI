@@ -25,7 +25,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
 
         [HttpPost]
-
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> CreateNewCustomer(CustomerInfoRequestDTO customer)
         {
             if (!ModelState.IsValid)
@@ -38,7 +38,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
         }
 
         [HttpGet("{id:long}")]
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetById([FromRoute] long id)
         {
             if (!ModelState.IsValid)
@@ -54,7 +54,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll([FromQuery] CustomerQueryObject query)
         {
             if (!ModelState.IsValid)
