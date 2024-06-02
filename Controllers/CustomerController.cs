@@ -3,6 +3,7 @@ using E_commercial_Web_RESTAPI.DTOS.Customers;
 using E_commercial_Web_RESTAPI.Helpers;
 using E_commercial_Web_RESTAPI.Mapper.CustomerMappper;
 using E_commercial_Web_RESTAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
 {
     [ApiController]
     [Route("api/customer")]
+ 
     public class CustomerController : ControllerBase
     {
         private readonly ApplicationDBcontext _context;
@@ -52,7 +54,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
         }
 
         [HttpGet]
-
+        [Authorize]
         public async Task<IActionResult> GetAll([FromQuery] CustomerQueryObject query)
         {
             if (!ModelState.IsValid)

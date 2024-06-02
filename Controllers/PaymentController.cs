@@ -4,6 +4,7 @@ using E_commercial_Web_RESTAPI.Helpers;
 using E_commercial_Web_RESTAPI.Mapper;
 using E_commercial_Web_RESTAPI.Models;
 using E_commercial_Web_RESTAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
@@ -11,6 +12,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
 {
     [ApiController]
     [Route("api/v1")]
+
     public class PaymentController : ControllerBase
     {
         private readonly ApplicationDBcontext _context;
@@ -69,7 +71,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
         }
 
         [HttpGet]
-
+        [Authorize]
         public async Task<IActionResult> GetAllPayments([FromQuery]PaymentQueryObject query)
         {
             if (!ModelState.IsValid)

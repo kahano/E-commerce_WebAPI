@@ -20,10 +20,7 @@ namespace E_commercial_Web_RESTAPI.Mapper
         }
         public static PaymentDTO ToPaymentDTO(this Payment payment)
         {
-            if (payment == null)
-            {
-                throw new ArgumentNullException(nameof(payment), "Payment cannot be null");
-            }
+          
 
             return new PaymentDTO
             {

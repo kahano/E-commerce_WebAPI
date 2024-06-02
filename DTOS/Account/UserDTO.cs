@@ -2,14 +2,12 @@
 
 namespace E_commercial_Web_RESTAPI.DTOS.Account
 {
-    public class LoginDTO
+    public class UserDTO
     {
         [Required]
-        public string? UserName { get; set; }
+        public string UserName { get; set; }
+
         [Required]
-        public string? Password { get; set; }
-     
-     
+        public string Email { get; set; }
     }
 }
-

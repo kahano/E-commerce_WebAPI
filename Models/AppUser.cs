@@ -2,8 +2,8 @@
 
 namespace E_commercial_Web_RESTAPI.Models
 {
-    //public class AppUser : IdentityUser
-    //{
+    public class AppUser : IdentityUser
+    {
 
-    //}
+    }
 }
