@@ -73,8 +73,8 @@ namespace E_commercial_Web_RESTAPI.Controllers
                     if (result.Succeeded)
                     {
 
-                 
-                         var roleResult = result;
+
+                    IdentityResult? roleResult;
                     
                         if( await _roleManager.FindByNameAsync(Role.Admin.ToString()) is null)
                         {

@@ -20,7 +20,10 @@ namespace E_commercial_Web_RESTAPI.Mapper
         }
         public static PaymentDTO ToPaymentDTO(this Payment payment)
         {
-          
+            if (payment is null)
+            {
+                throw new ArgumentException($"{nameof(payment)} is null");
+            }
 
             return new PaymentDTO
             {
@@ -31,7 +34,7 @@ namespace E_commercial_Web_RESTAPI.Mapper
                 CreatedDate = payment.CreatedDate,
                 CustomerId = payment.CustomerId,
                 CreatedBy = payment.customer.Name
-                
+
 
 
 
@@ -41,6 +44,11 @@ namespace E_commercial_Web_RESTAPI.Mapper
 
         public static Payment ToPayment(this PaymentDTO payment)
         {
+            if (payment is null)
+            {
+                throw new ArgumentException($"{nameof(payment)} is null");
+            }
+
             return new Payment
             {
 
@@ -53,6 +61,11 @@ namespace E_commercial_Web_RESTAPI.Mapper
 
         public static Payment ToPaymentFromRequestDTO(this PaymentRequestDTO paymentdto)
         {
+            if (paymentdto is null)
+            {
+                throw new ArgumentException($"{nameof(paymentdto)} is null");
+            }
+
             return new Payment
             {
                 Currency = ConvertToCurrencyEnum(paymentdto.Currency.ToUpper()),

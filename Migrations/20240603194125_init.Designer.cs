@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commercial_Web_RESTAPI.Migrations
 {
     [DbContext(typeof(ApplicationDBcontext))]
-    [Migration("20240602163040_addIdentity")]
-    partial class addIdentity
+    [Migration("20240603194125_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,9 +121,8 @@ namespace E_commercial_Web_RESTAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -133,6 +132,9 @@ namespace E_commercial_Web_RESTAPI.Migrations
 
                     b.Property<long>("CustomerId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long>("amount")
                         .HasColumnType("bigint");
@@ -147,6 +149,8 @@ namespace E_commercial_Web_RESTAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("payments");
                 });
@@ -291,6 +295,12 @@ namespace E_commercial_Web_RESTAPI.Migrations
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
 
                     b.Navigation("customer");
                 });

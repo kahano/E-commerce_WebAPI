@@ -21,8 +21,10 @@ namespace E_commercial_Web_RESTAPI.DTOS.Payments
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
-        public long CustomerId { get; set; }
+        public long? CustomerId { get; set; }
 
-        public string CreatedBy { get; set; } = string.Empty;
+        public string? CreatedBy { get; set; } 
+
+       
     }
 }

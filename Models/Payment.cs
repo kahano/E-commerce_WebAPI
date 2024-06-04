@@ -12,7 +12,10 @@ namespace E_commercial_Web_RESTAPI.Models
 
         public long CustomerId { get; set; }
 
-        public Customer? customer { get; set; }
+        public Customer customer { get; set; }
+
+        public int AppUserId { get; set; }
+        public AppUser User { get; set; }
 
         public string? source { get; set; } 
 
@@ -20,7 +23,6 @@ namespace E_commercial_Web_RESTAPI.Models
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
-        public string CreatedBy { get; set; } = string.Empty;
 
     }
 }

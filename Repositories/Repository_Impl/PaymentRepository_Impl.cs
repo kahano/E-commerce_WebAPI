@@ -31,18 +31,29 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
 
         public async Task<ApiResponse> InsertPayment(long customerId, Payment payment)
         {
+
             var isCustomerAvailable = await _context.customers.FirstOrDefaultAsync(s => s.Id == customerId);
             if (isCustomerAvailable == null)
             {
                 return new ApiResponse
                 {
                     Success = false,
-                    Message = $"Customer with ID {customerId} is not found",
+                    Message = $"Customer is not found or valid",
                     StatusCode = 404
                 };
 
 
             }
+            if (payment is null)
+            {
+                return new ApiResponse
+                {
+                    Success = false,
+                    Message = $"payment is not found",
+                    StatusCode = 404
+                };
+            }
+
             payment.CustomerId = isCustomerAvailable.Id;
 
             var response = await _paymentService.ChargeCardsync(payment);
@@ -77,10 +88,11 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
             {
                 paymentsAll = paymentsAll.Where(s => s.source == query.source);
             }
-            if(!string.IsNullOrWhiteSpace(query.customerId)) {
+            if (!string.IsNullOrWhiteSpace(query.customerId))
+            {
 
                 var val = Int64.Parse(query.customerId);
-                paymentsAll = paymentsAll.Where(s => s.CustomerId  == val);
+                paymentsAll = paymentsAll.Where(s => s.CustomerId == val);
             }
             return await paymentsAll.ToListAsync();
 

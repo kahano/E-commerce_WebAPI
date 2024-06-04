@@ -38,7 +38,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
                 return BadRequest(ModelState);
             }
             var paymentModel = paymentdto.ToPaymentFromRequestDTO();
-            var response = await _paymentRepository.InsertPayment(customerId, paymentModel);
+            var response = await _paymentRepository.InsertPayment( customerId,paymentModel);
 
             if (response.Success)
             {
@@ -54,7 +54,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
         [HttpGet("{Id:long}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetPaymentByIdAsync(long Id)
+        public async Task<IActionResult> GetPaymentByIdAsync([FromRoute] long Id)
         {
             if (!ModelState.IsValid)
             {
@@ -64,16 +64,26 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
             if (payment == null)
             {
-                return NotFound();
+                return NotFound("No transaction is found");
             }
-            var paymentModel = payment.ToPaymentDTO();
-            return Ok(paymentModel);
+
+            try
+            {
+                var paymentDTO = payment.ToPaymentDTO();
+                return Ok(paymentDTO);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception and return a server error response
+                // e.g., _logger.LogError(ex, "An error occurred while converting payment to DTO.");
+                return StatusCode(500, ex.Message);
+            }
 
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAllPayments([FromQuery]PaymentQueryObject query)
+        public async Task<IActionResult> GetAllPayments([FromQuery] PaymentQueryObject query)
         {
             if (!ModelState.IsValid)
             {
@@ -83,7 +93,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
             var getpayments = await _paymentRepository.GetAllPaymentsByCustomer(query);
             if (getpayments == null || !getpayments.Any())
             {
-                return NotFound("No payments found");
+                return NotFound("No transactions found");
             }
             var AllPayments = getpayments.Select(p => p.ToPaymentDTO()).ToList();
             return Ok(AllPayments);

@@ -19,6 +19,7 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
         }
         public async Task<Customer> CreateCustomer(Customer customer)
         {
+            if(customer is null) throw new ArgumentNullException(nameof(customer)); 
             await _context.customers.AddAsync(customer);
             await _context.SaveChangesAsync();
             return customer;
@@ -27,12 +28,12 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
 
         public async Task<Customer?> FindCustomerById(long id)
         {
-            return await _context.customers.Include(s => s.payments).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.customers.Include(s => s.payments).ThenInclude(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<Customer>> GetAllCustomers(CustomerQueryObject query)
         {
-            var customers =   _context.customers.Include(x => x.payments).AsQueryable();
+            var customers =   _context.customers.Include(x => x.payments).ThenInclude(x => x.User).AsQueryable();
             if (!string.IsNullOrWhiteSpace(query.Name))
             {
                 customers = customers.Where(s => s.Name.Equals(query.Name));
