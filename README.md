@@ -13,7 +13,7 @@
 
 ![stripe2](https://github.com/kahano/StripePayment_Integration_WebAPI/assets/48335933/aa88e1f3-0d1f-4f9f-a78d-10be39cc1501) 
 
-![stripe3](https://github.com/kahano/StripePayment_Integration_WebAPI/assets/48335933/a2292478-e9ee-48ad-9ac2-b409ff3d12c8)
+
 
 
 
