@@ -107,7 +107,7 @@ namespace E_commercial_Web_RESTAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("customers");
+                    b.ToTable("customers", (string)null);
                 });
 
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Payment", b =>
@@ -149,7 +149,7 @@ namespace E_commercial_Web_RESTAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("payments");
+                    b.ToTable("payments", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

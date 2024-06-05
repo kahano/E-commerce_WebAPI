@@ -46,5 +46,10 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
             return await customers.ToListAsync();
 
         }
+
+        public async Task<List<Customer>> GetCustomers() // for unit testing purposes
+        {
+            return await _context.customers.ToListAsync();
+        }
     }
 }

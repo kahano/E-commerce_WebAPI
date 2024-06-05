@@ -17,16 +17,18 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
 
     {
         private readonly ApplicationDBcontext _context;
-        private readonly ICustomerRepository _customerRepository;
         private readonly StripePaymentService _paymentService;
 
 
-        public PaymentRepository_Impl(ApplicationDBcontext context, ICustomerRepository customerRepository, StripePaymentService paymentService)
+        public PaymentRepository_Impl(ApplicationDBcontext context, StripePaymentService paymentService)
         {
             _context = context;
-            _customerRepository = customerRepository;
             _paymentService = paymentService;
         }
+
+
+
+
 
 
         public async Task<ApiResponse> InsertPayment(long customerId, Payment payment)
@@ -81,9 +83,9 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
 
         public async Task<List<Payment>> GetAllPaymentsByCustomer(PaymentQueryObject query)
         {
-            var paymentsAll =  _context.payments.Include(x => x.customer).AsQueryable();
-           
-            
+            var paymentsAll = _context.payments.Include(x => x.customer).AsQueryable();
+
+
             if (!string.IsNullOrWhiteSpace(query.source))
             {
                 paymentsAll = paymentsAll.Where(s => s.source == query.source);
@@ -98,5 +100,30 @@ namespace E_commercial_Web_RESTAPI.Repositories.Repository_Impl
 
         }
 
+        public async Task<List<Payment>> GetAllPayments()
+        {
+            return await _context.payments.ToListAsync();
+        }
+
+        public async Task<Payment> CreatePayment( Payment payment)
+        {
+           
+
+            if (payment is null)
+            {
+                throw new ArgumentException($"This payment is not found");
+            }
+
+            var response = await _paymentService.ChargeCardsync(payment);
+
+            if (response.Success)
+            {
+                await _context.payments.AddAsync(payment);
+                await _context.SaveChangesAsync();
+            }
+            return payment;
+        }
+
     }
 }
+

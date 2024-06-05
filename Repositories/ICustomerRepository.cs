@@ -9,6 +9,7 @@ namespace E_commercial_Web_RESTAPI.Repositories
         Task<Customer?> FindCustomerById(long id);
 
         Task<List<Customer>> GetAllCustomers(CustomerQueryObject query);
+        Task<List<Customer>> GetCustomers(); // for testing purposes
 
 
     }

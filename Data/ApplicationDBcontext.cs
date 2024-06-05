@@ -14,8 +14,8 @@ namespace E_commercial_Web_RESTAPI.Data
 
         }
 
-        public DbSet<Customer> customers { get; set; }
-        public DbSet<Payment> payments { get; set; }
+        public virtual DbSet<Customer> customers { get; set; }
+        public virtual DbSet<Payment> payments { get; set; }
        
 
         protected override void OnModelCreating(ModelBuilder builder)
