@@ -1,0 +1,14 @@
+.vs 
+bin 
+coverage
+stripe1.JPG
+stripe2.JPG
+stripe3.JPG 
+Skjermbilde.JPG 
+obj
+Extensions 
+Exceptions 
+StripePayment_Integration/StripePayment_Integration_WebAPI.sln
+StripePayment_Integration/StripePayment_Integration_WebAPI.csproj.user 
+StripePayment_Integration/E-commercial_Web_RESTAPI.http 
+properties
