@@ -163,3 +163,6 @@ C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePaymentTests\obj\
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePaymentTests\bin\Debug\net8.0\FakeItEasy.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePaymentTests\bin\Debug\net8.0\FluentAssertions.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePaymentTests\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePaymentTests\bin\Debug\net8.0\AutoFixture.dll
+C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePaymentTests\bin\Debug\net8.0\Fare.dll
+C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePaymentTests\bin\Debug\net8.0\AutoFixture.AutoMoq.dll

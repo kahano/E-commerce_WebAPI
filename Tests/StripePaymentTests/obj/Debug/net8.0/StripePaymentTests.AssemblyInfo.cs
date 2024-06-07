@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StripePaymentTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7f6a7ee299c8afd95769d7fc6efe870d74e4ac29")]
 [assembly: System.Reflection.AssemblyProductAttribute("StripePaymentTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StripePaymentTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
