@@ -9,5 +9,8 @@ namespace E_commercial_Web_RESTAPI.DTOS.Account
 
         [Required]
         public string Email { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
     }
 }

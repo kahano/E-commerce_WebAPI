@@ -13,7 +13,7 @@ namespace E_commercial_Web_RESTAPI.DTOS.Customers
 
         [Required]
         [MaxLength(10, ErrorMessage = "PhoneNumber can not be over 10 digits")]
-        string PhoneNumber ,
+        string PhoneNumber, 
 
         List<PaymentDTO> payments
 

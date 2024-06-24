@@ -9,17 +9,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_commercial_Web_RESTAPI.Controllers
 {
-    [ApiController]
-    [Route("api/customer")]
+   
  
-    public class CustomerController : ControllerBase
+    public class CustomerController : APIBaseController
     {
-        private readonly ApplicationDBcontext _context;
+     
         private readonly ICustomerRepository _customer_repository;
 
-        public CustomerController(ApplicationDBcontext context, ICustomerRepository customer_repository)
+        public CustomerController( ICustomerRepository customer_repository)
         {
-            _context = context;
+          
             _customer_repository = customer_repository;
         }
 

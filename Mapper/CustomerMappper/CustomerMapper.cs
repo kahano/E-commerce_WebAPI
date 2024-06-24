@@ -1,4 +1,5 @@
 ﻿using E_commercial_Web_RESTAPI.DTOS.Customers;
+using E_commercial_Web_RESTAPI.DTOS.Order;
 using E_commercial_Web_RESTAPI.Models;
 using System.Runtime.CompilerServices;
 
@@ -8,6 +9,7 @@ namespace E_commercial_Web_RESTAPI.Mapper.CustomerMappper
     {
         public static CustomerDTO ToCustomerDTO(this Customer customer)
         {
+           
             return new CustomerDTO(
 
                 customer.Id,
@@ -19,6 +21,7 @@ namespace E_commercial_Web_RESTAPI.Mapper.CustomerMappper
 
         public static Customer ToCustomerFromRequestDTO(this CustomerInfoRequestDTO customer)
         {
+            
             return new Customer {
 
              Name = customer.Name,

@@ -5,7 +5,7 @@
         USD,
         GBP,
         EUR,
-        NOK,
-        SR
+        NOK
+       
     }
 }

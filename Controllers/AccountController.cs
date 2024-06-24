@@ -1,6 +1,7 @@
 ﻿
 using E_commercial_Web_RESTAPI.Data;
 using E_commercial_Web_RESTAPI.DTOS.Account;
+using E_commercial_Web_RESTAPI.Interfaces;
 using E_commercial_Web_RESTAPI.Models;
 using E_commercial_Web_RESTAPI.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -17,34 +18,36 @@ using System.Text;
 
 namespace E_commercial_Web_RESTAPI.Controllers
 {
-    [ApiController]
-    [Route("api/account")]
- 
-    public class AccountController : ControllerBase
+    //[ApiController]
+    //[Route("api/account")]
+   
+    public class AccountController : APIBaseController
     {
 
-        private readonly ApplicationDBcontext _context;
+     
 
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
+      
 
      
 
         private readonly SignInManager<AppUser> _signInManager;
 
-        private readonly IConfiguration _configuration;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager
-            , IConfiguration configuration , ApplicationDBcontext context)
+
+        public AccountController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager
+          , IConfiguration configuration, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _roleManager = roleManager;  
             _signInManager = signInManager;
-            _roleManager = roleManager;
             _configuration = configuration;
-            _context = context;
+       
 
 
         }
-
+      
         [HttpPost("register")]
 
         public async Task<IActionResult> Register([FromBody] RegisterDTO registerdto)
@@ -103,6 +106,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
                                     UserName = appuser.UserName,
                                     Email = appuser.Email,
+                                    UserId = ""
                                 });
                         }
                         else
@@ -150,17 +154,18 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
             else
             {
+
                 var roles = await _userManager.GetRolesAsync(user);
                 var claims = new List<Claim>();
 
                 claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
                 claims.Add(new Claim(JwtRegisteredClaimNames.GivenName, user.UserName));
                 claims.Add(new Claim(ClaimTypes.Role, roles.FirstOrDefault()));
-                  
 
 
 
-            
+
+
                 var _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SigningKey"]));
                 var cryptedCredentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
                 var tokenDescriptor = new SecurityTokenDescriptor
@@ -186,10 +191,11 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
                 }); ;
             }
+        }
 
             
 
-        }
+        
     }
 
 }

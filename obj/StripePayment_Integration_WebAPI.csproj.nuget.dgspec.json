@@ -45,6 +45,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AWSSDK.Core": {
+              "target": "Package",
+              "version": "[3.7.304.16, )"
+            },
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.6, )"
@@ -80,6 +88,14 @@
             "Microsoft.Extensions.Identity.Core": {
               "target": "Package",
               "version": "[8.0.6, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.4.0, )"
+            },
+            "StackExchange.Redis": {
+              "target": "Package",
+              "version": "[2.7.33, )"
             },
             "Stripe.net": {
               "target": "Package",

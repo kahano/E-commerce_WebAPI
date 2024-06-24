@@ -1,5 +1,6 @@
 ﻿using E_commercial_Web_RESTAPI.DTOS;
 using E_commercial_Web_RESTAPI.Helpers;
+using E_commercial_Web_RESTAPI.Interfaces;
 using E_commercial_Web_RESTAPI.Mapper;
 using E_commercial_Web_RESTAPI.Models;
 using E_commercial_Web_RESTAPI.Repositories;
@@ -9,79 +10,76 @@ using System.ComponentModel.DataAnnotations;
 
 namespace E_commercial_Web_RESTAPI.Services
 {
-    public class StripePaymentService
+    public class StripePaymentService : IStripePaymentService
     {
+  
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
 
-
-
-
-        public async Task<ApiResponse> ChargeCardsync(Payment payment)
+        public StripePaymentService( IUnitOfWork unitOfWork, IConfiguration configuration)
         {
+        
+            _unitOfWork = unitOfWork;
+            _configuration = configuration;
+
+        }
+
+
+        public async Task<Payment> ChargeCardsync(long CartId, Payment payment)
+        {
+            StripeConfiguration.ApiKey = _configuration["Stripe:SecretKey"];
+            
+
+           var cart = await _unitOfWork._cart_repository.GetBasketItemsAsyncByBasketId(CartId);
+
             try
             {
-                StripeConfiguration.ApiKey = "SECRET_KEY";
 
-              
+                if (cart is null) return null;
+
+                
+
+                cart.amount = (long)cart.BasketItems.Sum(i => i.Quantity * (i.Price));
+                payment.amount = cart.amount;
+
                 var options = new ChargeCreateOptions
                 {
                     Amount = payment.amount,
-                    Currency = payment.Currency.ToString(),
-                    Source = payment.source, // considered as a bank credit/debitcard with information of owner
-              
+                    Currency = payment.Currency,
+                    Source = payment.source
+
 
                 };
 
                 var service = new ChargeService();
+
+
 
                 Charge charge = await service.CreateAsync(options);
 
 
                 if (charge.Paid)
                 {
-
-                    return new ApiResponse
-                    {
-                        Success = true,
-                        Message = $"Payment {charge.Id} is Successful",
-                        StatusCode = 200
-                    };
-
+                 
+                    payment.basketId = CartId;
+                    return payment;
                 }
                 else
                 {
-
-                    return new ApiResponse
-                    {
-                        Success = false,
-                        Message = $"Payment {charge.Id} is Unsuccessful",
-                        StatusCode = 400
-                    };
+                    throw new ArgumentException($"Cart with ID {cart.Id} does not exist.");
                 }
 
-            }
-            catch (StripeException e)
-            {
-                return new ApiResponse
-                {
-                    Success = false,
-                    Message = $"Stripe error for {payment.Currency.ToString()}: {e.Message}",
-                    StatusCode = 500
-                };
-            }
 
-
+            }
             catch (Exception e)
             {
-                return new ApiResponse
-                {
-                    Success = false,
-                    Message = e.Message,
-                    StatusCode = 400
-                };
+                throw e;
             }
+
 
 
         }
 
+        
     }
 }

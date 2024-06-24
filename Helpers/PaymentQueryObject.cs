@@ -2,11 +2,10 @@
 {
     public class PaymentQueryObject
     {
-       public string? customerId { get; set; }    
+       public string CustomerId { get; set; }    
         
         public string? source { get; set; } 
 
-        //public string? sortBy { get; set; }
         
     }
 }

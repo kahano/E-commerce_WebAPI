@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "MuhjdNcYOeKZtrHEsrUd/32SWbth9uF//x6aDli2LVh4qsQLuVQVCQ3TbVRGFzTv6q3biHwW3624GzpJeEsNnQ==",
+  "dgSpecHash": "PRab2ftNPly0HPvn4Ae8hbhEjBrSCWldWDe3qLRm7IWdbn6aSVqeZzFH29k+NrOCaZgbeLM0kIqKlqs6Wv68mQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Kahano\\Desktop\\StripePayment_Integration_WebAPI\\StripePayment_Integration\\StripePayment_Integration_WebAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Kahano\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
+    "C:\\Users\\Kahano\\.nuget\\packages\\awssdk.core\\3.7.304.16\\awssdk.core.3.7.304.16.nupkg.sha512",
     "C:\\Users\\Kahano\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Kahano\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\Kahano\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -56,6 +58,10 @@
     "C:\\Users\\Kahano\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Kahano\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Kahano\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "C:\\Users\\Kahano\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.8\\pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
+    "C:\\Users\\Kahano\\.nuget\\packages\\polly\\8.4.0\\polly.8.4.0.nupkg.sha512",
+    "C:\\Users\\Kahano\\.nuget\\packages\\polly.core\\8.4.0\\polly.core.8.4.0.nupkg.sha512",
+    "C:\\Users\\Kahano\\.nuget\\packages\\stackexchange.redis\\2.7.33\\stackexchange.redis.2.7.33.nupkg.sha512",
     "C:\\Users\\Kahano\\.nuget\\packages\\stripe.net\\44.10.0\\stripe.net.44.10.0.nupkg.sha512",
     "C:\\Users\\Kahano\\.nuget\\packages\\swashbuckle.aspnetcore\\6.6.2\\swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
     "C:\\Users\\Kahano\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.6.2\\swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",

@@ -1,14 +1,26 @@
+
+using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
+using AutoMapper;
 using E_commercial_Web_RESTAPI.Data;
+using E_commercial_Web_RESTAPI.Interfaces;
 using E_commercial_Web_RESTAPI.Models;
 using E_commercial_Web_RESTAPI.Repositories;
 using E_commercial_Web_RESTAPI.Repositories.Repository_Impl;
 using E_commercial_Web_RESTAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Stripe;
+using System.Configuration;
+using Order = E_commercial_Web_RESTAPI.Models.Order;
+using Product = E_commercial_Web_RESTAPI.Models.Product;
+using Polly;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using E_commercial_Web_RESTAPI.Helpers;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -102,12 +114,28 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository_Impl>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository_Impl>();
-builder.Services.AddScoped<StripePaymentService>();
-//builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDBcontext>();
-//todo
+builder.Services.AddScoped<IStripePaymentService,StripePaymentService>();
+builder.Services.AddScoped<IOrder, OrderService>();
+//builder.Services.AddScoped<IRepository<Product>, Repository_Impl<Product>>();
+builder.Services.AddScoped<IRepository<Order>, Repository_Impl<Order>>();
+//builder.Services.AddScoped<ITokenService,TokenService_Impl>();
+builder.Services.AddScoped<ICart,CartRepository_Impl>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped(typeof(IRepository<>), (typeof(Repository_Impl<>)));
+builder.Services.AddAutoMapper(typeof(Program));
+
+
+
+builder.Services.AddHttpClient();
+builder.Services.AddControllers();
+
+
+
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -125,4 +153,28 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+   // var context = services.GetRequiredService<ApplicationDBcontext>();
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+
+    //var userManager = services.GetRequiredService<UserManager<AppUser>>();
+
+    try
+    {
+       var context = services.GetRequiredService<ApplicationDBcontext>();
+        await context.Database.MigrateAsync();
+        await Seed.SeedAsync(loggerFactory,services);
+        
+
+    }
+    catch (Exception ex)
+    {
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "An error occured during migration");
+    }
+
+}
+await app.RunAsync();

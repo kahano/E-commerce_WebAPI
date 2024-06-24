@@ -1,44 +1,54 @@
-﻿using E_commercial_Web_RESTAPI.Data;
+﻿using AutoMapper;
+using E_commercial_Web_RESTAPI.Data;
 using E_commercial_Web_RESTAPI.DTOS.Payments;
 using E_commercial_Web_RESTAPI.Helpers;
+using E_commercial_Web_RESTAPI.Interfaces;
 using E_commercial_Web_RESTAPI.Mapper;
 using E_commercial_Web_RESTAPI.Models;
 using E_commercial_Web_RESTAPI.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Stripe;
 
 namespace E_commercial_Web_RESTAPI.Controllers
 {
-    [ApiController]
-    [Route("api/v1")]
 
-    public class PaymentController : ControllerBase
+    public class PaymentController : APIBaseController
     {
-        private readonly ApplicationDBcontext _context;
+    
         private readonly IPaymentRepository _paymentRepository;
+        private readonly IMapper _mapper;
 
 
 
-        public PaymentController(ApplicationDBcontext context, IPaymentRepository paymentRepository)
+
+
+
+        public PaymentController(IPaymentRepository paymentRepository, IMapper mapper)
         {
-            _context = context;
+           
             _paymentRepository = paymentRepository;
+            _mapper = mapper;
+         
+
 
 
         }
-        [HttpPost]
-        [Route("{customerId:long}")]
 
-        [Authorize(Roles = "Customer")]
-        public async Task<IActionResult> ChargeCard([FromRoute] long customerId, PaymentRequestDTO paymentdto)
+        
+        [HttpPost]
+        [Route("{customerId:long},{CartId:long}")]
+
+        //[Authorize(Roles = "Customer")]
+        public async Task<IActionResult> ChargeCard([FromRoute] long customerId, long CartId, [FromBody] PaymentRequestDTO paymentdto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var paymentModel = paymentdto.ToPaymentFromRequestDTO();
-            var response = await _paymentRepository.InsertPayment( customerId,paymentModel);
+            var response = await _paymentRepository.CheckOutPayment(customerId,CartId, paymentModel);
 
             if (response.Success)
             {
@@ -51,10 +61,12 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
 
 
+        //codes to review 
 
-        [HttpGet("{Id:long}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetPaymentByIdAsync([FromRoute] long Id)
+
+        [HttpGet("/payments/{Id:long}")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetPaymentByIdAsync(long Id)
         {
             if (!ModelState.IsValid)
             {
@@ -69,8 +81,8 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
             try
             {
-                var paymentDTO = payment.ToPaymentDTO();
-                return Ok(paymentDTO);
+              
+                return Ok(_mapper.Map<PaymentDTO>(payment));
             }
             catch (Exception ex)
             {
@@ -81,9 +93,9 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAllPayments([FromQuery] PaymentQueryObject query)
+        [HttpGet("/payments")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllPaymentsForCustomer([FromQuery] PaymentQueryObject query)
         {
             if (!ModelState.IsValid)
             {
@@ -95,10 +107,24 @@ namespace E_commercial_Web_RESTAPI.Controllers
             {
                 return NotFound("No transactions found");
             }
-            var AllPayments = getpayments.Select(p => p.ToPaymentDTO()).ToList();
-            return Ok(AllPayments);
+            try
+            {
+
+                return Ok(_mapper.Map<IReadOnlyList<PaymentDTO>>(getpayments));
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception and return a server error response
+                // e.g., _logger.LogError(ex, "An error occurred while converting payment to DTO.");
+                return StatusCode(500, ex.Message);
+            }
 
         }
+
 
 
     }

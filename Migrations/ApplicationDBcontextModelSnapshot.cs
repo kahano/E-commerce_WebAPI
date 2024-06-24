@@ -87,6 +87,69 @@ namespace E_commercial_Web_RESTAPI.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.BasketItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CartId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("imageurl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("basketItems");
+                });
+
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Cart", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("amount")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("customerId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("carts");
+                });
+
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Customer", b =>
                 {
                     b.Property<long>("Id")
@@ -107,7 +170,84 @@ namespace E_commercial_Web_RESTAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("customers", (string)null);
+                    b.ToTable("customers");
+                });
+
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Order", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("paymentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("orders");
+                });
+
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.OrderItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PictureUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Payment", b =>
@@ -118,22 +258,23 @@ namespace E_commercial_Web_RESTAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Currency")
-                        .HasColumnType("int");
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CustomerId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<long>("amount")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("basketId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("description")
@@ -141,15 +282,95 @@ namespace E_commercial_Web_RESTAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("source")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("basketId");
 
-                    b.ToTable("payments", (string)null);
+                    b.ToTable("payments");
+                });
+
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Product", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.Property<string>("imageurl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Description = "Introducing the XSO25 electronic product which helps online shoppers conduct transactions with ease.This powerful eCommerce tool not only directs visitors to the correct product page, but also provides inventory data and pricinginformation on products for quick purchase. With an intuitive user interface, this device makes shopping a breeze for online consumers.",
+                            Name = "Samsung 43 Inch Class Series LED 4K",
+                            Quantity = 2,
+                            Stock = 0,
+                            imageurl = "images/Samsung 43 Inch Class Series LED 4K.jpg",
+                            price = 1200.00m
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Description = "Introducing the XSO25 electronic product which helps online shoppers conduct transactions with ease.This powerful eCommerce tool not only directs visitors to the correct product page, but also provides inventory data and pricinginformation on products for quick purchase. With an intuitive user interface, this device makes shopping a breeze for online consumers.",
+                            Name = "JBL Tune 760NC",
+                            Quantity = 9,
+                            Stock = 0,
+                            imageurl = "images/JBL Tune 760NC.jpg",
+                            price = 300.00m
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Description = "Introducing the XSO25 electronic product which helps online shoppers conduct transactions with ease.This powerful eCommerce tool not only directs visitors to the correct product page, but also provides inventory data and pricinginformation on products for quick purchase. With an intuitive user interface, this device makes shopping a breeze for online consumers.",
+                            Name = "Samsung - Galaxy A71 A716U 5G Fully Unlocked 128GB - Prism Cube Black",
+                            Quantity = 3,
+                            Stock = 0,
+                            imageurl = "images/Samsung - Galaxy A71 A716U 5G Fully Unlocked 128GB - Prism Cube Black.jpg",
+                            price = 990.00m
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Description = "Introducing the XSO35 electronic product which helps online shoppers conduct transactions with ease.This powerful eCommerce tool not only directs visitors to the correct product page, but also provides inventory data and pricinginformation on products for quick purchase. With an intuitive user interface, this device makes shopping a breeze for online consumers.",
+                            Name = "Samsung - Galaxy A73 A716E 5G Fully Unlocked 128GB - Prism Cube Navy",
+                            Quantity = 4,
+                            Stock = 0,
+                            imageurl = "images/Samsung - Galaxy A71 A716U 5G Fully Unlocked 128GB - Prism Cube Black.jpg",
+                            price = 1150.00m
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -285,17 +506,78 @@ namespace E_commercial_Web_RESTAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.BasketItem", b =>
+                {
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.Cart", "Cart")
+                        .WithMany("BasketItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Order", b =>
+                {
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.Customer", "Customer")
+                        .WithMany("orders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.Product", null)
+                        .WithMany("orders")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.OrderItem", b =>
+                {
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Payment", b =>
                 {
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("E_commercial_Web_RESTAPI.Models.Customer", "customer")
                         .WithMany("payments")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("E_commercial_Web_RESTAPI.Models.AppUser", "User")
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.Cart", "Cart")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("basketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
 
                     b.Navigation("User");
 
@@ -353,9 +635,26 @@ namespace E_commercial_Web_RESTAPI.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Cart", b =>
+                {
+                    b.Navigation("BasketItems");
+                });
+
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Customer", b =>
                 {
+                    b.Navigation("orders");
+
                     b.Navigation("payments");
+                });
+
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Product", b =>
+                {
+                    b.Navigation("orders");
                 });
 #pragma warning restore 612, 618
         }
