@@ -25,57 +25,6 @@ namespace E_commercial_Web_RESTAPI.Services
         }
 
 
-        //public async Task<Payment> ChargeCardsync(long orderId, long CartId, Payment payment)
-        //{
-        //    StripeConfiguration.ApiKey = _configuration["Stripe:SecretKey"];
-
-
-        //    var order = await _unitOfWork._order_repository.GetByIdAsync(orderId);
-        //    var cart = await _unitOfWork._cart_repository.GetBasketItemsAsyncByBasketId(CartId);
-
-
-
-        //    if (cart is null) return null;
-
-        //    if (order is null) return null;
-
-        //    order.Status = OrderStatus.Failed;
-        //    payment.Status = nameof(order.Status);
-
-        //    cart.amount = (long)cart.BasketItems.Sum(i => i.Quantity * (i.Price));
-        //    payment.amount = cart.amount;
-
-        //    var options = new ChargeCreateOptions
-        //    {
-        //        Amount = payment.amount,
-        //        Currency = payment.Currency,
-        //        Source = payment.source
-
-
-        //    };
-
-        //    var service = new ChargeService();
-
-
-
-        //    Charge charge = await service.CreateAsync(options);
-
-
-        //    if (charge.Paid)
-        //    {
-        //        order.Status = OrderStatus.PaymentSucceeded;
-        //        payment.basketId = CartId;
-        //        return payment;
-        //    }
-        //    else
-        //    {
-        //        throw new ArgumentException($"Cart with ID {cart.Id} does not exist.");
-        //    }
-
-
-
-        //}
-
         public async Task<Cart> CreateOrUpdatePayment(string UserId)
         {
 
