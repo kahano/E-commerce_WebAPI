@@ -9,12 +9,10 @@ namespace E_commercial_Web_RESTAPI.Repositories
     {
 
 
-        Task<ApiResponse> CheckOutPayment(long customerId, long CartId, Payment payment);
+        Task<ApiResponse> CheckOutPayment(long orderId, long CartId, Payment payment);
         Task<Payment?> GetPaymentById(long paymentId);
-        Task<List<Payment>> GetAllPaymentsByCustomer(PaymentQueryObject query);
-       // Task<List<Payment>> GetAllPayments(); // for testing purposes
-
-       // Task<Payment> CreatePayment(Payment payment); // for testing purposes
+        //Task<List<Payment>> GetAllPaymentsByCustomer(PaymentQueryObject query);
+   
 
     }
 }

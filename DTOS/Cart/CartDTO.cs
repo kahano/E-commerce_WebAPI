@@ -8,7 +8,7 @@ namespace E_commercial_Web_RESTAPI.DTOS.Cart
         public long Id { get; set; }
 
         public long amount { get; set; }
-        public List<BasketItemDTO> BasketItems { get; set; } = new List<BasketItemDTO>();
+        public List<CartItemDTO> BasketItems { get; set; } = new List<CartItemDTO>();
         public string Currency { get; set; }
 
         public string sources { get; set; } 

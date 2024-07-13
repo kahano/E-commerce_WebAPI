@@ -5,8 +5,6 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StripePayment_Integration_WebAPI", "StripePayment_Integration_WebAPI.csproj", "{9C9429BC-DAC0-459D-B406-AE4AB0A71B35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StripePaymentTests", "..\StripePaymentTests\StripePaymentTests.csproj", "{012E3287-7671-41E0-877F-6B8FE7507803}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{9C9429BC-DAC0-459D-B406-AE4AB0A71B35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C9429BC-DAC0-459D-B406-AE4AB0A71B35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C9429BC-DAC0-459D-B406-AE4AB0A71B35}.Release|Any CPU.Build.0 = Release|Any CPU
-		{012E3287-7671-41E0-877F-6B8FE7507803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{012E3287-7671-41E0-877F-6B8FE7507803}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{012E3287-7671-41E0-877F-6B8FE7507803}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{012E3287-7671-41E0-877F-6B8FE7507803}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commercial_Web_RESTAPI.Migrations
 {
     [DbContext(typeof(ApplicationDBcontext))]
-    [Migration("20240623215740_modify_cart_payment_tables")]
-    partial class modify_cart_payment_tables
+    [Migration("20240710215618_Init_tables")]
+    partial class Init_tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,7 +90,33 @@ namespace E_commercial_Web_RESTAPI.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.BasketItem", b =>
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Cart", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("PaymentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("amount")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("carts");
+                });
+
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.CartItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,6 +147,10 @@ namespace E_commercial_Web_RESTAPI.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("imageurl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -131,49 +161,9 @@ namespace E_commercial_Web_RESTAPI.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("basketItems");
-                });
+                    b.HasIndex("UserId");
 
-            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Cart", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("amount")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("customerId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("carts");
-                });
-
-            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Customer", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("customers");
+                    b.ToTable("CarttItems");
                 });
 
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Order", b =>
@@ -188,11 +178,11 @@ namespace E_commercial_Web_RESTAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("CustomerId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("ProductId")
                         .HasColumnType("bigint");
@@ -201,17 +191,18 @@ namespace E_commercial_Web_RESTAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("paymentId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("total")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("orders");
                 });
@@ -251,52 +242,6 @@ namespace E_commercial_Web_RESTAPI.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Payment", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CustomerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("amount")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("basketId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("source")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("basketId");
-
-                    b.ToTable("payments");
                 });
 
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Product", b =>
@@ -509,10 +454,10 @@ namespace E_commercial_Web_RESTAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.BasketItem", b =>
+            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.CartItem", b =>
                 {
                     b.HasOne("E_commercial_Web_RESTAPI.Models.Cart", "Cart")
-                        .WithMany("BasketItems")
+                        .WithMany("Items")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -523,24 +468,32 @@ namespace E_commercial_Web_RESTAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Cart");
 
                     b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Order", b =>
                 {
-                    b.HasOne("E_commercial_Web_RESTAPI.Models.Customer", "Customer")
-                        .WithMany("orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("E_commercial_Web_RESTAPI.Models.Product", null)
                         .WithMany("orders")
                         .HasForeignKey("ProductId");
 
-                    b.Navigation("Customer");
+                    b.HasOne("E_commercial_Web_RESTAPI.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.OrderItem", b =>
@@ -560,31 +513,6 @@ namespace E_commercial_Web_RESTAPI.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Payment", b =>
-                {
-                    b.HasOne("E_commercial_Web_RESTAPI.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("E_commercial_Web_RESTAPI.Models.Customer", "customer")
-                        .WithMany("payments")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("E_commercial_Web_RESTAPI.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("basketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("User");
-
-                    b.Navigation("customer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -640,14 +568,7 @@ namespace E_commercial_Web_RESTAPI.Migrations
 
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Cart", b =>
                 {
-                    b.Navigation("BasketItems");
-                });
-
-            modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Customer", b =>
-                {
-                    b.Navigation("orders");
-
-                    b.Navigation("payments");
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("E_commercial_Web_RESTAPI.Models.Order", b =>

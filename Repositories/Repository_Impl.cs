@@ -17,6 +17,9 @@ namespace E_commercial_Web_RESTAPI.Repositories
         {
             _context = context;
         }
+
+       
+
         public void Add(T entity)
         {
            _context.Set<T>().Add(entity);   
@@ -34,9 +37,9 @@ namespace E_commercial_Web_RESTAPI.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(long Id)
+        public T? GetByIdAsync(long Id)
         {
-            return await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == Id);
+            return  _context.Set<T>().FirstOrDefault(x => x.Id == Id);
         }
 
         public void Update(T entity)

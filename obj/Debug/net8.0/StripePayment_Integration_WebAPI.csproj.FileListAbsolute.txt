@@ -141,12 +141,14 @@ C:\Users\Kahano\Desktop\E-commercial_WebAPI\E-commercial_Web_RESTAPI\obj\Debug\n
 C:\Users\Kahano\Desktop\E-commercial_WebAPI\E-commercial_Web_RESTAPI\obj\Debug\net8.0\ref\StripePayment_Integration_WebAPI.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\appsettings.json
+C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Data\SeedData\Products.json
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\StripePayment_Integration_WebAPI.exe
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\StripePayment_Integration_WebAPI.deps.json
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\StripePayment_Integration_WebAPI.runtimeconfig.json
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\StripePayment_Integration_WebAPI.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\StripePayment_Integration_WebAPI.pdb
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\AWSSDK.Core.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Humanizer.dll
@@ -186,6 +188,8 @@ C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integrati
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Pipelines.Sockets.Unofficial.dll
+C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Polly.dll
+C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Polly.Core.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\StackExchange.Redis.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Stripe.net.dll
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -291,7 +295,3 @@ C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integrati
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\obj\Debug\net8.0\StripePayment_Integration_WebAPI.pdb
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\obj\Debug\net8.0\StripePayment_Integration_WebAPI.genruntimeconfig.cache
 C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\obj\Debug\net8.0\ref\StripePayment_Integration_WebAPI.dll
-C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\AWSSDK.Core.dll
-C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Polly.dll
-C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Polly.Core.dll
-C:\Users\Kahano\Desktop\StripePayment_Integration_WebAPI\StripePayment_Integration\bin\Debug\net8.0\Data\SeedData\products.json

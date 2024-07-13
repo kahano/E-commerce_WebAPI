@@ -22,7 +22,7 @@ namespace E_commercial_Web_RESTAPI.Models
         public decimal price { get; set; }
 
         [JsonIgnore]
-       // [IgnoreDataMember]
+        [IgnoreDataMember]
         public ICollection<Order> orders { get; set; } = new List<Order>();
 
         //[JsonIgnore]

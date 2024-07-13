@@ -1,11 +1,14 @@
 ﻿using E_commercial_Web_RESTAPI.Models;
+using E_commercial_Web_RESTAPI.Repositories;
 
 namespace E_commercial_Web_RESTAPI.Interfaces
 {
-    public interface IProduct
+    public interface IProduct 
     {
-        Task<Product> AddProductAsync(Product p);
+        void Update(Product product);
 
-        Task<List<Product>> GetAllProductsAsync();
+        Product? GetProductById(long Id);
+
+        
     }
 }

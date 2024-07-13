@@ -6,7 +6,6 @@ using E_commercial_Web_RESTAPI.Data;
 using E_commercial_Web_RESTAPI.Interfaces;
 using E_commercial_Web_RESTAPI.Models;
 using E_commercial_Web_RESTAPI.Repositories;
-using E_commercial_Web_RESTAPI.Repositories.Repository_Impl;
 using E_commercial_Web_RESTAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
@@ -112,11 +111,12 @@ builder.Services.AddAuthentication(options =>
 });
 
 
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository_Impl>();
-builder.Services.AddScoped<IPaymentRepository, PaymentRepository_Impl>();
+//builder.Services.AddScoped<ICustomerRepository, CustomerRepository_Impl>();
+//builder.Services.AddScoped<IPaymentRepository, PaymentRepository_Impl>();
 builder.Services.AddScoped<IStripePaymentService,StripePaymentService>();
-builder.Services.AddScoped<IOrder, OrderService>();
-//builder.Services.AddScoped<IRepository<Product>, Repository_Impl<Product>>();
+ builder.Services.AddScoped<IOrder, OrderService>();
+ builder.Services.AddScoped<ICartService, CartService>();
+ builder.Services.AddScoped<IRepository<Product>, Repository_Impl<Product>>();
 builder.Services.AddScoped<IRepository<Order>, Repository_Impl<Order>>();
 //builder.Services.AddScoped<ITokenService,TokenService_Impl>();
 builder.Services.AddScoped<ICart,CartRepository_Impl>();

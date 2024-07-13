@@ -20,7 +20,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<OrderDTO>> CreateOrder([FromBody]OrderRequestDTO orderDto)
+        public async Task<ActionResult<OrderDTO>> CreateOrder([FromBody] OrderRequestDTO orderDto)
         {
             if (!ModelState.IsValid)
             {
@@ -28,17 +28,17 @@ namespace E_commercial_Web_RESTAPI.Controllers
             }
 
 
-            var order = await _orderService.createOrderAsync(orderDto.CustomerId,
-                 orderDto.Address, orderDto.productId, orderDto.quantity);
+            var order = await _orderService.PlaceOrderAsync(orderDto.UserId,
+                 orderDto.Address);
 
-            if (order == null) return BadRequest(new ApiResponse() 
-                                                { Success = false, Message = "Problem Creating Order", StatusCode = 400 });
+            if (order == null) return BadRequest(new ApiResponse()
+            { Success = false, Message = "Problem Creating Order", StatusCode = 400 });
 
             return Ok(order);
         }
 
         [HttpGet("/ordersForUser/")]
-        public async Task<ActionResult<IReadOnlyList<OrderDTO>>> GetOrdersForUser([FromQuery] OrderQueryObject query)
+        public async Task<ActionResult<IReadOnlyList<OrderDTO>>> GetOrdersForUser(string UserId)
         {
 
             if (!ModelState.IsValid)
@@ -46,7 +46,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var orders = await _orderService.GetOrderForCustomerAsync(query);
+            var orders = await _orderService.GetOrderForUserAsync(UserId);
             return Ok(_mapper.Map<IReadOnlyList<OrderDTO>>(orders));
         }
 
@@ -61,19 +61,19 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
             var order = await _orderService.GetOrderByIdAsync(OrderId);
 
-            if (order == null) return NotFound(new ApiResponse() {Message = "No Order is found With this OrderId ", StatusCode = 404});
+            if (order == null) return NotFound(new ApiResponse() { Message = "No Order is found With this OrderId ", StatusCode = 404 });
 
             return Ok(_mapper.Map<OrderDTO>(order));
         }
 
-        [HttpGet]
+        //[HttpGet]
 
-        public async Task<ActionResult<IReadOnlyList<OrderDTO>>> GetAllOrders()
-        {
-            var orders = await _orderService.GetAllOrders();
-            if(orders is null) return NotFound(new ApiResponse() { StatusCode = 404 });
-            return Ok(_mapper.Map<IReadOnlyList<OrderDTO>>(orders));
-        }
+        //public async Task<ActionResult<IReadOnlyList<OrderDTO>>> GetAllOrders()
+        //{
+        //    var orders = await _orderService.GetAllOrders();
+        //    if (orders is null) return NotFound(new ApiResponse() { StatusCode = 404 });
+        //    return Ok(_mapper.Map<IReadOnlyList<OrderDTO>>(orders));
+        //}
 
 
 

@@ -3,7 +3,6 @@ using E_commercial_Web_RESTAPI.Data;
 using E_commercial_Web_RESTAPI.DTOS.Payments;
 using E_commercial_Web_RESTAPI.Helpers;
 using E_commercial_Web_RESTAPI.Interfaces;
-using E_commercial_Web_RESTAPI.Mapper;
 using E_commercial_Web_RESTAPI.Models;
 using E_commercial_Web_RESTAPI.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -16,8 +15,8 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
     public class PaymentController : APIBaseController
     {
-    
-        private readonly IPaymentRepository _paymentRepository;
+
+        private readonly IStripePaymentService _paymentRepository;
         private readonly IMapper _mapper;
 
 
@@ -25,105 +24,106 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
 
 
-        public PaymentController(IPaymentRepository paymentRepository, IMapper mapper)
+        public PaymentController(IStripePaymentService paymentRepository, IMapper mapper)
         {
-           
+
             _paymentRepository = paymentRepository;
             _mapper = mapper;
-         
+
 
 
 
         }
 
-        
-        [HttpPost]
-        [Route("{customerId:long},{CartId:long}")]
+
+        [HttpPost("{UserId}")]
+        //[Route("{UserId:string}")]
 
         //[Authorize(Roles = "Customer")]
-        public async Task<IActionResult> ChargeCard([FromRoute] long customerId, long CartId, [FromBody] PaymentRequestDTO paymentdto)
+        public async Task<ActionResult<Cart>> ChargeCard( string UserId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var paymentModel = paymentdto.ToPaymentFromRequestDTO();
-            var response = await _paymentRepository.CheckOutPayment(customerId,CartId, paymentModel);
+            var cart = await _paymentRepository.CreateOrUpdatePayment(UserId);
+            //var paymentModel = paymentdto.ToPaymentFromRequestDTO();
+            //var response = await _paymentRepository.CheckOutPayment(orderId, CartId, paymentModel);
 
-            if (response.Success)
+            if (cart is not null)
             {
-                return Ok(response);
+                return cart;
             }
 
-            return StatusCode(response.StatusCode, response);
+            return BadRequest(new ApiResponse() { Message = "problem with the Cart ", StatusCode = 500 });
 
         }
 
 
 
-        //codes to review 
+        ////codes to review 
 
 
-        [HttpGet("/payments/{Id:long}")]
-        //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetPaymentByIdAsync(long Id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var payment = await _paymentRepository.GetPaymentById(Id);
+        //[HttpGet("/payments/{Id:long}")]
+        ////[Authorize(Roles = "Admin")]
+        //public async Task<IActionResult> GetPaymentByIdAsync(long Id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    var payment = await _paymentRepository.GetPaymentById(Id);
 
-            if (payment == null)
-            {
-                return NotFound("No transaction is found");
-            }
+        //    if (payment == null)
+        //    {
+        //        return NotFound("No transaction is found");
+        //    }
 
-            try
-            {
-              
-                return Ok(_mapper.Map<PaymentDTO>(payment));
-            }
-            catch (Exception ex)
-            {
-                // Log the exception and return a server error response
-                // e.g., _logger.LogError(ex, "An error occurred while converting payment to DTO.");
-                return StatusCode(500, ex.Message);
-            }
+        //    try
+        //    {
 
-        }
+        //        return Ok(_mapper.Map<PaymentDTO>(payment));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log the exception and return a server error response
+        //        // e.g., _logger.LogError(ex, "An error occurred while converting payment to DTO.");
+        //        return StatusCode(500, ex.Message);
+        //    }
 
-        [HttpGet("/payments")]
-        //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAllPaymentsForCustomer([FromQuery] PaymentQueryObject query)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //}
 
-            var getpayments = await _paymentRepository.GetAllPaymentsByCustomer(query);
-            if (getpayments == null || !getpayments.Any())
-            {
-                return NotFound("No transactions found");
-            }
-            try
-            {
+        //[HttpGet("/payments")]
+        ////[Authorize(Roles = "Admin")]
+        //public async Task<IActionResult> GetAllPaymentsForCustomer([FromQuery] PaymentQueryObject query)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-                return Ok(_mapper.Map<IReadOnlyList<PaymentDTO>>(getpayments));
+        //    var getpayments = await _paymentRepository.GetAllPaymentsByCustomer(query);
+        //    if (getpayments == null || !getpayments.Any())
+        //    {
+        //        return NotFound("No transactions found");
+        //    }
+        //    try
+        //    {
 
-
+        //        return Ok(_mapper.Map<IReadOnlyList<PaymentDTO>>(getpayments));
 
 
-            }
-            catch (Exception ex)
-            {
-                // Log the exception and return a server error response
-                // e.g., _logger.LogError(ex, "An error occurred while converting payment to DTO.");
-                return StatusCode(500, ex.Message);
-            }
 
-        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log the exception and return a server error response
+        //        // e.g., _logger.LogError(ex, "An error occurred while converting payment to DTO.");
+        //        return StatusCode(500, ex.Message);
+        //    }
+
+        //}
 
 
 

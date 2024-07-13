@@ -14,16 +14,14 @@ namespace E_commercial_Web_RESTAPI.Repositories
             _context = context;
         }
 
-        public async Task<Product> AddProductAsync(Product p)
+        public Product? GetProductById(long Id)
         {
-            await _context.products.AddAsync(p);
-            await _context.SaveChangesAsync();
-            return p;
+            return _context.products.FirstOrDefault(p => p.Id == Id);   
         }
 
-        public async Task<List<Product>> GetAllProductsAsync()
+        public void Update(Product product)
         {
-            return await _context.products.ToListAsync();
+            _context.products.Update(product);
         }
     }
 }

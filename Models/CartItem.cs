@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace E_commercial_Web_RESTAPI.Models
 {
-    public class BasketItem : BaseEntity
+    public class CartItem : BaseEntity
     {
         
        
@@ -29,12 +31,23 @@ namespace E_commercial_Web_RESTAPI.Models
     
         public string? Type { get; set; }
 
+        [ForeignKey("Product")]
+        [JsonIgnore]
+        [IgnoreDataMember]
         public long ProductId { get; set; }
         public Product Product { get; set; }
 
 
-        public long CartId { get; set; }
+        [Required]
+        [ForeignKey("User")]
+        public string UserId { get; set; }
 
-        public Cart Cart { get; set; }
+        public AppUser User { get; set; }
+
+        [ForeignKey("Cart")]
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public long CartId { get; set; }
+        public Cart Cart { get; set;}
     }
 }

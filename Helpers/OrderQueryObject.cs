@@ -2,7 +2,7 @@
 {
     public class OrderQueryObject
     {
-        public string? customerId { get; set; } 
+        public string? UserId { get; set; } 
     
     }
 }

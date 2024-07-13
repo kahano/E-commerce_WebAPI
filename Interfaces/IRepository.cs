@@ -5,7 +5,8 @@ namespace E_commercial_Web_RESTAPI.Repositories
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        Task<T?> GetByIdAsync(long Id);
+        T? GetByIdAsync(long Id);
+
         Task<IReadOnlyList<T>> GetAllAsync();
 
         void Add(T entity);

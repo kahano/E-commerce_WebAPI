@@ -8,12 +8,12 @@ namespace E_commercial_Web_RESTAPI.DTOS.Order
     public class OrderRequestDTO
     {
  
-        public long CustomerId { get; set; }
+        public string UserId { get; set; }
+
 
         public string Address { get; set; }
 
-        public long productId { get; set; } 
-        public int quantity { get; set; } 
+  
    
 
 

@@ -1,15 +1,15 @@
 ﻿using E_commercial_Web_RESTAPI.Helpers;
 using E_commercial_Web_RESTAPI.Models;
+using E_commercial_Web_RESTAPI.Repositories;
 
 namespace E_commercial_Web_RESTAPI.Interfaces
 {
-    public interface IOrder
+    public interface IOrder  
     {
-        Task<Order> createOrderAsync(long customerId, string Address, long productId, int quantity);
+        Task<Order> PlaceOrderAsync(string UserId, string Address);
 
-        Task<List<Order>> GetOrderForCustomerAsync(OrderQueryObject query);
+        Task<IEnumerable<Order>> GetOrderForUserAsync(string UserId);
 
-        Task<IReadOnlyList<Order>> GetAllOrders();
 
         Task<Order?> GetOrderByIdAsync(long id);
     }

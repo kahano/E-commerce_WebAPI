@@ -11,27 +11,18 @@ namespace E_commercial_Web_RESTAPI.Models
     {
 
       
-        public List<BasketItem> BasketItems { get; set; }= new List<BasketItem>();
+        public IEnumerable<CartItem> Items { get; set; }= new List<CartItem>();
 
     
         public long amount { get; set; }
 
-        //[ForeignKey("payment")]
-        //public long paymentId {  get; set; }
         
-        //public Payment payment { get; set; }
-        //public string sources { get; set; }
-
-        //public string Currency {  get; set; }
-
-        //public string? ClientSecret { get; set; }
-        //public string? PaymentIntentId { get; set; }
-
+        public string? SessionId { get; set; }
         
-
+        public string? PaymentId { get; set; }
 
         [Required]
-        public long customerId { get; set; }
+        public string UserId { get; set; }
 
       
 

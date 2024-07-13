@@ -7,7 +7,6 @@ using Microsoft.Identity.Client;
 using Stripe;
 using Stripe.Climate;
 using System.Reflection.Emit;
-using Customer = E_commercial_Web_RESTAPI.Models.Customer;
 using Order = E_commercial_Web_RESTAPI.Models.Order;
 using Product = E_commercial_Web_RESTAPI.Models.Product;
 
@@ -21,15 +20,11 @@ namespace E_commercial_Web_RESTAPI.Data
 
         }
 
-        public  DbSet<Customer> customers { get; set; }
-        public  DbSet<Payment> payments { get; set; }
-
       
 
+        public DbSet<CartItem> CarttItems { get; set; }
         public DbSet<Cart> carts { get; set; }
-
-        public DbSet<BasketItem> basketItems { get; set; }
-
+        public override DbSet<AppUser> Users { get; set; }   
         public DbSet<Order> orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Product> products { get; set; }
@@ -40,19 +35,24 @@ namespace E_commercial_Web_RESTAPI.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Order>(s => s.HasKey(p => p.Id));
-            builder.Entity<Order>()
-                   .Property(s => s.Status)
-                    .HasConversion(
-                o => o.ToString(),
-                o => (OrderStatus)Enum.Parse(typeof(OrderStatus), o));
-            builder.Entity<Order>(k => k.Property(s => s.OrderDate));
-            builder.Entity<Order>(s => s.Property(p => p.total));
+            //builder.Entity<Order>(s => s.HasKey(p => p.Id));
+            //builder.Entity<Order>()
+            //       .Property(s => s.Status)
+            //        .HasConversion(
+            //    o => o.ToString(),
+            //    o => (OrderStatus)Enum.Parse(typeof(OrderStatus), o));
+            //builder.Entity<Order>(k => k.Property(s => s.OrderDate));
+            //builder.Entity<Order>(s => s.Property(p => p.total));
 
 
 
-            builder.Entity<Order>(k => k.HasMany(o => o.OrderItems));
-            builder.Entity<Order>(k => k.HasOne(o => o.Customer).WithMany(c => c.orders).HasForeignKey(o => o.CustomerId).OnDelete(DeleteBehavior.Restrict));
+           // builder.Entity<Order>(k => k.HasMany(o => o.OrderItems));
+            //builder.Entity<Order>(k => k.HasOne(o => o.Payment).WithOne());
+
+            builder.Entity<CartItem>(s => s.HasKey(p => p.Id));
+            builder.Entity<CartItem>(k => k.HasOne(o => o.Cart).WithMany(c => c.Items).HasForeignKey(o => o.CartId).OnDelete(DeleteBehavior.Cascade));
+
+
             //builder.Entity<BasketItem>(k => k.HasOne(o => o.Cart).WithMany(c => c.BasketItems).HasForeignKey(o => o.CartId));
             //builder.Entity<BasketItem>(k => k.HasOne(o => o.Product).WithOne());
             //builder.Entity<Order>(k => k.HasOne(o => o.Payment));
@@ -102,32 +102,12 @@ namespace E_commercial_Web_RESTAPI.Data
             }));
 
 
-            //builder.Entity<Cart>(s => s.HasData(new Cart()
-            //{
-            //    Id = 1,
-            //    customerId = 1,
-            //    Currency = "USD",
-            //    sources = "tok_visa"
-            //}, new Cart()
-            //{
-            //    Id = 2,
-            //    customerId = 2,
-            //    Currency = "EUR",
-            //    sources = "tok_mastercard"
-            //}));
-            //}, new Cart()
-            //{
-            //    Id = 5,
-            //    customerId = 2,
-            //    Currency = "NOK",
-            //    sources = "tok_mastercard"
-            //}));
-            builder.Entity<BasketItem>(s => s.HasKey(p => p.Id));
-            builder.Entity<BasketItem>(s => s.Property(p => p.ProductName).HasMaxLength(100));
-            builder.Entity<BasketItem>(s => s.Property(p => p.Quantity));
+            builder.Entity<CartItem>(s => s.HasKey(p => p.Id));
+            builder.Entity<CartItem>(s => s.Property(p => p.ProductName).HasMaxLength(100));
+            builder.Entity<CartItem>(s => s.Property(p => p.Quantity));
 
-            builder.Entity<BasketItem>(s => s.Property(p => p.imageurl));
-            builder.Entity<BasketItem>(s => s.Property(p => p.Price).HasColumnType("decimal(18,2)"));
+            builder.Entity<CartItem>(s => s.Property(p => p.imageurl));
+            builder.Entity<CartItem>(s => s.Property(p => p.Price).HasColumnType("decimal(18,2)"));
 
             //builder.Entity<BasketItem>(s => s.HasData(new BasketItem
             //{

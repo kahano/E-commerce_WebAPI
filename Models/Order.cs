@@ -7,9 +7,7 @@ namespace E_commercial_Web_RESTAPI.Models
     public class Order : BaseEntity
     {
      
-        public long CustomerId { get; set; }
-
-        public long paymentId { get; set; }
+        public string? customerName { get; set; }
         public string Address { get; set; }
         public List<OrderItem> OrderItems { get;  set; } = new List<OrderItem>();
 
@@ -17,16 +15,23 @@ namespace E_commercial_Web_RESTAPI.Models
         public decimal total { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
-        public OrderStatus Status { get; set; } = OrderStatus.Pending; // default 
+       // public OrderStatus Status { get; set; } = OrderStatus.Pending; // default 
 
-        //[JsonIgnore]
-        //[IgnoreDataMember]
+        public string Status = OrderStatus.Pending.ToString();
 
-        //public Payment Payment { get; set; }
 
-        [JsonIgnore]
-        [IgnoreDataMember]
 
-        public Customer Customer { get; set; }
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        public AppUser User { get; set; }
+
+        public string? PaymentId { get; set; }
+
+
+        public static string ConvertToStatusEnum(OrderStatus status)
+        {
+            return status.ToString();
+        }
+
     }
 }

@@ -106,7 +106,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
 
                                     UserName = appuser.UserName,
                                     Email = appuser.Email,
-                                    UserId = ""
+                                    UserId = "",
                                 });
                         }
                         else
@@ -186,7 +186,7 @@ namespace E_commercial_Web_RESTAPI.Controllers
                 new NewUserDTO
                 {
 
-                    User = new UserDTO { UserName = user.UserName, Email = user.Email },
+                    User = new UserDTO { UserName = user.UserName, Email = user.Email , UserId = user.Id },
                     token = tok
 
                 }); ;
